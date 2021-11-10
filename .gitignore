@@ -1,0 +1,8 @@
+/aws-test.iml
+/BlipEventsDatamartIntegrationFunction/.gradle/
+/.idea/
+.aws-sam
+/BlipEventsDatamartIntegrationFunction/build/
+/BlipEventsDatamartIntegrationFunction/datamart-fake
+BlipEventsDatamartIntegrationFunction/config.properties
+/samconfig.toml

@@ -1,0 +1,4 @@
+blipUri=https://http.msging.net/commands
+blipKey=Key <...>
+#dbConnectionUrl=jdbc:sqlserver://localhost:1433;databaseName=optest;user=sa;password=ASDlkj123\\][
+dbConnectionUrl=jdbc:sqlite:datamart-fake
