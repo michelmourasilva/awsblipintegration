@@ -67,7 +67,7 @@ public class App implements RequestHandler<APIGatewayProxyRequestEvent, APIGatew
                                 httpClient,
                                 new Config(
                                         System.getenv("BLIP_KEY"),
-                                        System.getenv("BLIP_URL"),
+                                        System.getenv("BLIP_URI"),
                                         System.getenv("DB_CONNECTION_URL")
                                 )
                         ),
@@ -94,11 +94,13 @@ public class App implements RequestHandler<APIGatewayProxyRequestEvent, APIGatew
 
 
 class IntegrationRequest {
-    public final LocalDate startDate;
-    public final LocalDate endDate;
+    public LocalDate startDate;
+    public LocalDate endDate;
 
-    IntegrationRequest(LocalDate startDate, LocalDate endDate) {
+    public IntegrationRequest(LocalDate startDate, LocalDate endDate) {
         this.startDate = startDate;
         this.endDate = endDate;
     }
+
+    public IntegrationRequest(){}
 }
