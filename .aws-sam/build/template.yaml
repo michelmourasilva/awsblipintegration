@@ -1,0 +1,60 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Parameters:
+  BlipKey:
+    Type: String
+  BlipUri:
+    Type: String
+  DbConnectionUrl:
+    Type: String
+Description: '
+
+  VWCO Chatbot Blip AWS resources
+
+  '
+Globals:
+  Function:
+    Timeout: 20
+Resources:
+  BlipEventsDatamartIntegrationFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: BlipEventsDatamartIntegrationFunction
+      Handler: br.com.vwco.chatbot.blip.datamart.integration.App::handleRequest
+      Runtime: java11
+      MemorySize: 512
+      Environment:
+        Variables:
+          BLIP_KEY:
+            Fn::Sub: ${BlipKey}
+          BLIP_URI:
+            Fn::Sub: ${BlipUri}
+          DB_CONNECTION_URL:
+            Fn::Sub: ${DbConnectionUrl}
+      Policies:
+      - S3FullAccessPolicy:
+          BucketName: blip-test
+      Events:
+        BlipEventsDatamartIntegration:
+          Type: Api
+          Properties:
+            Path: /execute
+            Method: post
+Outputs:
+  BlipEventsDatamartIntegrationApi:
+    Description: API Gateway endpoint URL for Prod stage for BlipEventsDatamartIntegration
+      function
+    Value:
+      Fn::Sub: https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/hello/
+  BlipEventsDatamartIntegrationFunction:
+    Description: BlipEventsDatamartIntegration Function ARN
+    Value:
+      Fn::GetAtt:
+      - BlipEventsDatamartIntegrationFunction
+      - Arn
+  BlipEventsDatamartIntegrationFunctionIamRole:
+    Description: Implicit IAM Role created for BlipEventsDatamartIntegration function
+    Value:
+      Fn::GetAtt:
+      - BlipEventsDatamartIntegrationFunctionRole
+      - Arn

@@ -1,5 +1,7 @@
 package br.com.vwco.chatbot.blip.datamart.integration;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -20,7 +22,6 @@ public class BlipService {
 
     public List<String> fetchCategories(LocalDate startDate, LocalDate endDate) throws IOException, InterruptedException {
         var body = blipClient.fetchCategories(startDate, endDate);
-
         return objectMapper.readTree(body).get("resource").get("items").findValuesAsText("category");
     }
 

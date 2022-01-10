@@ -1,0 +1,13 @@
+version = 0.1
+[default]
+[default.deploy]
+[default.deploy.parameters]
+stack_name = "lambdaapp"
+s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-k3jc8ahtaytm"
+s3_prefix = "lambdaapp"
+region = "us-east-1"
+confirm_changeset = true
+capabilities = "CAPABILITY_IAM"
+disable_rollback = true
+parameter_overrides = "BlipKey=\"Key dndjb3YyOjR0SFZKdlRjR3FqbE1hbDd6RlVR\" BlipUri=\"https://http.msging.net/commands\" DbConnectionUrl=\"jdbc:sqlserver://database.cy4ibmqxejb7.us-east-1.rds.amazonaws.com:1433;databaseName=optest;user=admin;password=password123\""
+image_repositories = []

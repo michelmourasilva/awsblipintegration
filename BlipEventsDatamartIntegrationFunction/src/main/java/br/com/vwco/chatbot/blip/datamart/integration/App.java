@@ -41,7 +41,7 @@ public class App implements RequestHandler<APIGatewayProxyRequestEvent, APIGatew
         IntegrationRequest parsedBody;
 
         try {
-            parsedBody = objectMapper.readValue(body, IntegrationRequest.class);
+            parsedBody = objectMapper.readValue(body, IntegrationRequest.class);            
         } catch (JacksonException e) {
             logger.log("Error parsing request body: " + e.getMessage());
             return response.withStatusCode(400)
@@ -51,14 +51,13 @@ public class App implements RequestHandler<APIGatewayProxyRequestEvent, APIGatew
         // Connect to the DB
         MsSqlEventRepository dbConnection = null;
 
-        try {
+        try {            
             dbConnection = new MsSqlEventRepository(DriverManager.getConnection(System.getenv("DB_CONNECTION_URL")));
         } catch (SQLException e) {
-            logger.log("Error connecting to DB: " + e.getMessage());
+            logger.log("Error connecting to DB: " + e.getMessage() + " - connectingString: " + System.getenv("DB_CONNECTION_URL") + " //");
             return response.withStatusCode(500)
-                    .withBody("{ \"code\": \"db_connection_error\" }");
+                    .withBody("{ \"code\": \"db_connection_error\" , \"conexao\": System.getenv(\"DB_CONNECTION_URL\")}");
         }
-
 
         // Execute the processs
         final IntegrationInteractor integrationInteractor = new IntegrationInteractor(
@@ -77,6 +76,7 @@ public class App implements RequestHandler<APIGatewayProxyRequestEvent, APIGatew
         );
 
         try {
+            logger.log("startDate: " + parsedBody.startDate + " / endDate: " + parsedBody.endDate + " / blipkey: " + System.getenv("BLIP_KEY") + " / blipurI: " + System.getenv("BLIP_URI") + " / dbconection:  " + System.getenv("DB_CONNECTION_URL") );
             integrationInteractor.execute(parsedBody.startDate, parsedBody.endDate);
 
             return response
@@ -86,8 +86,10 @@ public class App implements RequestHandler<APIGatewayProxyRequestEvent, APIGatew
             logger.log("Error executing integration: " + e.getMessage());
             return response
                     .withStatusCode(500)
-                    .withBody("{ \"code\": \"db_connection_error\", \"message\": \"" + e.getMessage() + "\" }  ");
+                    .withBody("{ \"code\": \"db_integration_error\", \"message\": \"" + e.getMessage() + "\" }  ");
         }
+
+
     }
 
 }

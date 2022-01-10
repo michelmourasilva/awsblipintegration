@@ -35,6 +35,7 @@ dependencies {
 
 
 application {
-    mainClassName = 'br.com.vwco.chatbot.blip.datamart.integration.LocalApp'
+    mainClassName = 'br.com.vwco.chatbot.blip.datamart.integration.App'
 }
+
 

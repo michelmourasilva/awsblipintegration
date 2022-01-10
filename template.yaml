@@ -32,7 +32,7 @@ Resources:
           BLIP_URI:
             Fn::Sub: ${BlipUri}
           DB_CONNECTION_URL:
-            Fn::Sub: ${DbConnectionUrl}
+            Fn::Sub: ${DbConnectionUrl}            
       Policies:
         - S3FullAccessPolicy:
             BucketName: blip-test
